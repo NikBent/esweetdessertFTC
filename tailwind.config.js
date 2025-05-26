@@ -14,6 +14,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                olive: '#a0a060', // ← tambahkan warna custom di sini
+            },
         },
     },
 
