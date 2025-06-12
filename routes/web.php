@@ -6,6 +6,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+
 
 // User profile routes
 Route::middleware('auth')->group(function () {
@@ -28,7 +31,7 @@ Route::post('/update-cart', [ProductController::class, 'updateCart'])->name('upd
 Route::post('/remove-from-cart', [ProductController::class, 'removeFromCart'])->name('remove.from.cart');
 
 // Admin subdomain group
-Route::domain('admin.esweet.local')->middleware(['auth', 'is_admin'])->group(function () {
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
     Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
@@ -38,8 +41,43 @@ Route::domain('admin.esweet.local')->middleware(['auth', 'is_admin'])->group(fun
     // Add other admin routes here
 });
 
+Route::get('/debug-host', function (\Illuminate\Http\Request $request) {
+    return 'Current host: ' . $request->getHost();
+});
+
+
 // Email verification
 Route::get('verify-email', [App\Http\Controllers\Auth\EmailVerificationPromptController::class, 'show'])->middleware('auth')->name('verification.notice');
+
+Route::middleware(['auth', /* maybe 'admin' middleware */])->prefix('admin')->group(function() {
+    // Orders listing, optional status filter via query string ?status=unpaid/done/cancelled
+    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+
+    // Cancel an order
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('admin.orders.cancel');
+});
+
+Route::middleware(['auth'])->prefix('admin')->group(function(){
+    // Products listing & inline-add
+-   Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
++   Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+    // Store new product
+-   Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
++   Route::post('/products', [AdminProductController::class, 'store'])->name('admin.products.store');
+    // Update existing product
+-   Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
++   Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
+});
+
+
+use App\Http\Controllers\Admin\NotificationController;
+
+Route::middleware(['auth'])->prefix('admin')->group(function(){
+    // List notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('admin.notifications.index');
+    // Optionally: mark a notification as read via AJAX or POST
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('admin.notifications.read');
+});
 
 // Auth routes
 require __DIR__ . '/auth.php';
