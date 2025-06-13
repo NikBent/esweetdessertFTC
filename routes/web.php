@@ -59,14 +59,11 @@ Route::middleware(['auth', /* maybe 'admin' middleware */])->prefix('admin')->gr
 
 Route::middleware(['auth'])->prefix('admin')->group(function(){
     // Products listing & inline-add
--   Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
-+   Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+   Route::get('/product', [AdminProductController::class, 'index'])->name('admin.product.index');
     // Store new product
--   Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
-+   Route::post('/products', [AdminProductController::class, 'store'])->name('admin.products.store');
+   Route::post('/product', [AdminProductController::class, 'store'])->name('admin.products.store');
     // Update existing product
--   Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
-+   Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
+   Route::put('/product/{product}', [AdminProductController::class, 'update'])->name('admin.product.update');
 });
 
 
