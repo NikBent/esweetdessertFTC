@@ -24,9 +24,10 @@
     <aside class="w-60 bg-cream border-r border-gray-300 flex flex-col justify-between py-8 px-6">
       {{-- Logo / Brand --}}
       <div class="space-y-8">
-        <h1 class="text-center text-2xl font-brand text-gray-800">
+        <h1 class="brand-font text-center text-2xl font-brand text-gray-800">
           Esweet Dessert
         </h1>
+        <p class="text-xs text-gray-800">PREMIUM NASTAR WIJSMAN</p>
         {{-- Sidebar nav links --}}
         <nav class="flex flex-col space-y-4">
           {{-- Orders (with badge) --}}

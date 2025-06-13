@@ -45,8 +45,8 @@
 
             <!-- Center Logo -->
             <a href="/" class="text-center flex-1 absolute left-1/2 transform -translate-x-1/2">
-                <h1 class="font-pinyon text-3xl font-semibold text-black drop-shadow-md">Esweet Dessert</h1>
-                <p class="text-xs uppercase tracking-widest hover:underline">Premium Nastar Wijsman</p>
+                <h1 class="brand-font text-3xl font-semibold text-black drop-shadow-md">Esweet Dessert</h1>
+                <p class="text-xs text-gray-800 uppercase tracking-widest hover:underline">Premium Nastar Wijsman</p>
             </a>
 
             <!-- Right Nav -->
