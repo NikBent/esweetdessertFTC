@@ -9,6 +9,7 @@
                 </div>
             @endif
 
+            {{-- Shopping Cart Table --}}
             @if(count($cart) > 0)
                 <table class="w-full bg-white shadow rounded overflow-hidden">
                     <thead class="bg-gray-200 text-left">
@@ -58,6 +59,49 @@
                     ← Continue Shopping
                 </a>
             </div>
+
+            @if(count($cart) > 0)
+                <form action="{{ route('place.order') }}" method="POST" class="mt-6 text-right">
+                    @csrf
+                    <button type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded transition">
+                        ✅ Place Order
+                    </button>
+                </form>
+            @endif
+
+            {{-- User Order History --}}
+            <div class="mt-16">
+                <h2 class="text-xl font-bold mb-4">Your Order History</h2>
+
+                @if($orders->count())
+                    <table class="w-full bg-white shadow rounded overflow-hidden">
+                        <thead class="bg-gray-200 text-left">
+                            <tr>
+                                <th class="px-4 py-3">Customer</th>
+                                <th class="px-4 py-3">Product</th>
+                                <th class="px-4 py-3">Quantity</th>
+                                <th class="px-4 py-3">Price</th>
+                                <th class="px-4 py-3">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($orders as $order)
+                                <tr class="border-t">
+                                    <td class="px-4 py-3">{{ $order->customer_name }}</td>
+                                    <td class="px-4 py-3">{{ $order->product_name }}</td>
+                                    <td class="px-4 py-3">{{ $order->qty }}</td>
+                                    <td class="px-4 py-3">Rp {{ number_format($order->price, 0, ',', '.') }}</td>
+                                    <td class="px-4 py-3">{{ \Carbon\Carbon::parse($order->date)->format('d M Y H:i') }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-gray-600">You have not placed any orders yet.</p>
+                @endif
+            </div>
+
         </div>
     </section>
 </x-app-layout>
