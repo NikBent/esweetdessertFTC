@@ -6,8 +6,29 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
-        return view('admin.dashboard'); // Create resources/views/admin/dashboard.blade.php
+        // This corresponds to resources/views/admin/dashboard.blade.php
+        return view('admin.dashboard');
+    }
+
+    public function products()
+    {
+        return view('admin.products');
+    }
+
+    public function notifications()
+    {
+        return view('admin.notifications');
+    }
+
+    public function analytics()
+    {
+        return view('admin.analytics');
+    }
+
+    public function settings()
+    {
+        return view('admin.settings');
     }
 }

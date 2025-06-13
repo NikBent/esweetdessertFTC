@@ -15,7 +15,12 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                olive: '#a0a060', // ← tambahkan warna custom di sini
+                olive: '#a0a060', 
+                cream: '#FFFDD0',
+            },
+             fontFamily: {
+                body: ['Istok Web', 'sans-serif'],
+                brand: ['Pinyon Script', 'cursive'],
             },
         },
     },
